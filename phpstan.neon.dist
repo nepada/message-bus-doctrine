@@ -1,0 +1,32 @@
+includes:
+    - vendor/phpstan/phpstan-strict-rules/rules.neon
+    - vendor/pepakriz/phpstan-exception-rules/extension.neon
+    - tests/PHPStan/disallowedCalls.neon
+
+parameters:
+    level: max
+    paths:
+        - src
+
+    exceptionRules:
+        uncheckedExceptions:
+            - LogicException
+            - Nette\InvalidStateException
+
+    ignoreErrors:
+        - # false positive
+            path: src/MessageBusDoctrine/Middleware/TransactionMiddleware.php
+            message: "#^Throwable is never thrown in the corresponding try block$#"
+            count: 1
+        - # false positive
+            path: src/MessageBusDoctrine/Middleware/TransactionMiddleware.php
+            message: "#^Missing @throws Throwable annotation$#"
+            count: 1
+        - # false positive
+            path: src/MessageBusDoctrine/Middleware/ClearEntityManagerMiddleware.php
+            message: "#^Throwable is never thrown in the corresponding try block$#"
+            count: 1
+        - # false positive
+            path: src/MessageBusDoctrine/Middleware/ClearEntityManagerMiddleware.php
+            message: "#^Missing @throws Throwable annotation$#"
+            count: 1
