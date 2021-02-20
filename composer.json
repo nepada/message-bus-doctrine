@@ -21,7 +21,7 @@
         "nepada/message-bus": "^2.0@dev"
     },
     "require-dev": {
-        "nette/tester": "^2.3.4",
+        "nette/tester": "^2.3.5",
         "phpstan/phpstan": "^0.12.60",
         "phpstan/phpstan-strict-rules": "^0.12.6",
         "pepakriz/phpstan-exception-rules": "^0.11.2",
