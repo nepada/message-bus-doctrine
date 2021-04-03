@@ -56,8 +56,11 @@ final class DispatchRecordedEventsFromEntities implements EventSubscriber
         }
     }
 
-    private function collectEventsFromEntity(object $entity): void
+    private function collectEventsFromEntity(?object $entity): void
     {
+        if ($entity === null) {
+            return;
+        }
         if (! $entity instanceof ContainsRecordedEvents) {
             return;
         }
