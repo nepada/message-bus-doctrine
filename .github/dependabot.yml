@@ -14,3 +14,4 @@ updates:
       - dependency-type: "development"
     ignore:
       - dependency-name: "doctrine/cache"
+      - dependency-name: "doctrine/dbal"
