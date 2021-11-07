@@ -47,7 +47,8 @@ class RecordingEntityManager extends EntityManagerDecorator
     }
 
     /**
-     * @param mixed $objectName
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+     * @param string|null $objectName
      */
     public function clear($objectName = null): void
     {

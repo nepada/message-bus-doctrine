@@ -1,6 +1,5 @@
 includes:
     - vendor/phpstan/phpstan-strict-rules/rules.neon
-    - vendor/pepakriz/phpstan-exception-rules/extension.neon
     - vendor/spaze/phpstan-disallowed-calls/extension.neon
     - vendor/spaze/phpstan-disallowed-calls/disallowed-dangerous-calls.neon
     - tests/PHPStan/disallowedCalls.neon
@@ -10,25 +9,25 @@ parameters:
     paths:
         - src
 
-    exceptionRules:
-        uncheckedExceptions:
+    exceptions:
+        implicitThrows: false
+        check:
+            missingCheckedExceptionInThrows: true
+            tooWideThrowType: true
+        uncheckedExceptionClasses:
             - LogicException
             - Nette\InvalidStateException
 
     ignoreErrors:
         - # false positive
             path: src/MessageBusDoctrine/Middleware/TransactionMiddleware.php
-            message: "#^Throwable is never thrown in the corresponding try block$#"
-            count: 1
-        - # false positive
-            path: src/MessageBusDoctrine/Middleware/TransactionMiddleware.php
-            message: "#^Missing @throws Throwable annotation$#"
+            message: "#^Dead catch - Throwable is never thrown in the try block\\.$#"
             count: 1
         - # false positive
             path: src/MessageBusDoctrine/Middleware/ClearEntityManagerMiddleware.php
-            message: "#^Throwable is never thrown in the corresponding try block$#"
+            message: "#^Dead catch - Throwable is never thrown in the try block\\.$#"
             count: 1
         - # false positive
             path: src/MessageBusDoctrine/Middleware/ClearEntityManagerMiddleware.php
-            message: "#^Missing @throws Throwable annotation$#"
+            message: "#^Property Nepada\\\\MessageBusDoctrine\\\\Middleware\\\\ClearEntityManagerMiddleware\\:\\:\\$clearOnError is never read, only written\\.$#"
             count: 1
