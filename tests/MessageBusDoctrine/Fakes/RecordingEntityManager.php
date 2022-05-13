@@ -52,8 +52,11 @@ class RecordingEntityManager extends EntityManagerDecorator
      */
     public function clear($objectName = null): void
     {
+        if (func_num_args() > 0) {
+            throw new \LogicException('Calling ' . __METHOD__ . '() with any arguments to clear specific entities is deprecated');
+        }
         $this->log[] = __METHOD__;
-        parent::clear($objectName);
+        parent::clear();
     }
 
 }
