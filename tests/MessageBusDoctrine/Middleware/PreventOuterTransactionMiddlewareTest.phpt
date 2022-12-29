@@ -72,7 +72,7 @@ class PreventOuterTransactionMiddlewareTest extends TestCase
     private function createEntityManager(): EntityManagerInterface
     {
         $tempDir = Environment::getTempDir();
-        $configuration = Setup::createAnnotationMetadataConfiguration([$tempDir]);
+        $configuration = Setup::createAnnotationMetadataConfiguration([$tempDir], false, null, null, false);
         return EntityManager::create(['driver' => 'pdo_sqlite', 'path' => "$tempDir/db.sqlite"], $configuration);
     }
 

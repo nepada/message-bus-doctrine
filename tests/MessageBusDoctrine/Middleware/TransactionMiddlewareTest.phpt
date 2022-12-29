@@ -244,7 +244,7 @@ class TransactionMiddlewareTest extends TestCase
     private function createEntityManager(): RecordingEntityManager
     {
         $tempDir = Environment::getTempDir();
-        $configuration = Setup::createAnnotationMetadataConfiguration([$tempDir]);
+        $configuration = Setup::createAnnotationMetadataConfiguration([$tempDir], false, null, null, false);
         $entityManger = EntityManager::create(['driver' => 'pdo_sqlite', 'path' => "$tempDir/db.sqlite"], $configuration);
         $entityManger->getConnection()->setNestTransactionsWithSavepoints(true);
 
