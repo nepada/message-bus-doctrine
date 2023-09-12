@@ -64,14 +64,16 @@ class ClearEntityManagerMiddlewareTest extends TestCase
     {
         $entityManager = $this->createEntityManager();
         $middleware = new ClearEntityManagerMiddleware($entityManager, false, false, $isEnabled);
-        $callback = function () use ($entityManager): void {
-            $entityManager->log[] = 'db operations';
-            throw new \Exception();
-        };
 
         Assert::exception(
-            function () use ($middleware, $callback): void {
-                $this->runInClearEntityManagerMiddleware($callback, $middleware);
+            function () use ($entityManager, $middleware): void {
+                $this->runInClearEntityManagerMiddleware(
+                    function () use ($entityManager): void {
+                        $entityManager->log[] = 'db operations';
+                        throw new \Exception();
+                    },
+                    $middleware,
+                );
             },
             \Throwable::class,
         );

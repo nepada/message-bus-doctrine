@@ -20,3 +20,9 @@ parameters:
 
     excludePaths:
         - tests/temp/*
+
+    shipmonkRules:
+        forbidCheckedExceptionInCallable:
+            immediatelyCalledCallables:
+                'NepadaTests\MessageBusDoctrine\Middleware\ClearEntityManagerMiddlewareTest::runInClearEntityManagerMiddleware': 0
+                'NepadaTests\MessageBusDoctrine\Middleware\TransactionMiddlewareTest::runInTransactionMiddleware': 0

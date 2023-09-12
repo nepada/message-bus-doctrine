@@ -78,14 +78,16 @@ class TransactionMiddlewareTest extends TestCase
     public function testEntityManagerIsClosedWhenTransactionFails(): void
     {
         $entityManager = $this->createEntityManager();
-        $callback = function () use ($entityManager): void {
-            $entityManager->log[] = 'db operations';
-            throw new \RuntimeException('Error');
-        };
 
         Assert::exception(
-            function () use ($callback, $entityManager): void {
-                $this->runInTransactionMiddleware($callback, $entityManager);
+            function () use ($entityManager): void {
+                $this->runInTransactionMiddleware(
+                    function () use ($entityManager): void {
+                        $entityManager->log[] = 'db operations';
+                        throw new \RuntimeException('Error');
+                    },
+                    $entityManager,
+                );
             },
             \RuntimeException::class,
         );
@@ -106,14 +108,15 @@ class TransactionMiddlewareTest extends TestCase
     public function testNothingIsDoneWhenMainTransactionIsRolledBackInsideAndExceptionIsThrown(): void
     {
         $entityManager = $this->createEntityManager();
-        $callback = function () use ($entityManager): void {
-            $entityManager->rollback();
-            throw new \RuntimeException('Error');
-        };
-
         Assert::exception(
-            function () use ($callback, $entityManager): void {
-                $this->runInTransactionMiddleware($callback, $entityManager);
+            function () use ($entityManager): void {
+                $this->runInTransactionMiddleware(
+                    function () use ($entityManager): void {
+                        $entityManager->rollback();
+                        throw new \RuntimeException('Error');
+                    },
+                    $entityManager,
+                );
             },
             \RuntimeException::class,
         );
@@ -132,14 +135,16 @@ class TransactionMiddlewareTest extends TestCase
     public function testNothingIsDoneWhenMainTransactionIsCommittedInsideAndExceptionIsThrown(): void
     {
         $entityManager = $this->createEntityManager();
-        $callback = function () use ($entityManager): void {
-            $entityManager->commit();
-            throw new \RuntimeException('Error');
-        };
 
         Assert::exception(
-            function () use ($callback, $entityManager): void {
-                $this->runInTransactionMiddleware($callback, $entityManager);
+            function () use ($entityManager): void {
+                $this->runInTransactionMiddleware(
+                    function () use ($entityManager): void {
+                        $entityManager->commit();
+                        throw new \RuntimeException('Error');
+                    },
+                    $entityManager,
+                );
             },
             \RuntimeException::class,
         );
