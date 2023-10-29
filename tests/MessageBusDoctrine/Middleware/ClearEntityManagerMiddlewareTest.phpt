@@ -40,7 +40,6 @@ class ClearEntityManagerMiddlewareTest extends TestCase
 
     /**
      * @dataProvider getStates
-     * @param bool $isEnabled
      */
     public function testClearOnStart(bool $isEnabled): void
     {
@@ -58,7 +57,6 @@ class ClearEntityManagerMiddlewareTest extends TestCase
 
     /**
      * @dataProvider getStates
-     * @param bool $isEnabled
      */
     public function testClearOnError(bool $isEnabled): void
     {
@@ -84,7 +82,6 @@ class ClearEntityManagerMiddlewareTest extends TestCase
 
     /**
      * @dataProvider getStates
-     * @param bool $isEnabled
      */
     public function testClearOnSuccess(bool $isEnabled): void
     {
