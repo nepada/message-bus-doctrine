@@ -47,7 +47,7 @@ class TransactionMiddleware implements MiddlewareInterface
 
     private function assertTransactionNestingLevel(
         int $expectedTransactionNestingLevel,
-        ?\Throwable $previousException = null
+        ?\Throwable $previousException = null,
     ): void
     {
         $transactionNestingLevel = $this->entityManager->getConnection()->getTransactionNestingLevel();

@@ -31,10 +31,7 @@ class RecordingEntityManager extends EntityManagerDecorator
         parent::rollback();
     }
 
-    /**
-     * @param mixed $entity
-     */
-    public function flush($entity = null): void
+    public function flush(mixed $entity = null): void
     {
         $this->log[] = __METHOD__;
         parent::flush($entity);
