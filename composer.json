@@ -16,7 +16,7 @@
     ],
     "require": {
         "php": ">=8.1.0 <8.4",
-        "doctrine/orm": "^2.8@dev",
+        "doctrine/orm": "^2.13@dev",
         "doctrine/persistence": "^2.0 || ^3.0",
         "nepada/message-bus": "^2.0@dev || ^3.0@dev"
     },
