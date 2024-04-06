@@ -3,9 +3,10 @@ declare(strict_types = 1);
 
 namespace NepadaTests\MessageBusDoctrine\Middleware;
 
+use Doctrine\DBAL\DriverManager;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Tools\Setup;
+use Doctrine\ORM\ORMSetup;
 use Nepada\MessageBusDoctrine\Middleware\TransactionMiddleware;
 use NepadaTests\Environment;
 use NepadaTests\MessageBusDoctrine\Fakes\CallbackMiddleware;
@@ -249,8 +250,9 @@ class TransactionMiddlewareTest extends TestCase
     private function createEntityManager(): RecordingEntityManager
     {
         $tempDir = Environment::getTempDir();
-        $configuration = Setup::createAnnotationMetadataConfiguration([$tempDir], false, null, null, false);
-        $entityManger = EntityManager::create(['driver' => 'pdo_sqlite', 'path' => "$tempDir/db.sqlite"], $configuration);
+        $configuration = ORMSetup::createAttributeMetadataConfiguration([$tempDir]);
+        $connection = DriverManager::getConnection(['driver' => 'pdo_sqlite', 'path' => "$tempDir/db.sqlite"]);
+        $entityManger = new EntityManager($connection, $configuration);
         $entityManger->getConnection()->setNestTransactionsWithSavepoints(true);
 
         return new RecordingEntityManager($entityManger);

@@ -3,9 +3,10 @@ declare(strict_types = 1);
 
 namespace NepadaTests\MessageBusDoctrine\Middleware;
 
+use Doctrine\DBAL\DriverManager;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Tools\Setup;
+use Doctrine\ORM\ORMSetup;
 use Nepada\MessageBusDoctrine\Middleware\PreventOuterTransactionMiddleware;
 use Nepada\MessageBusDoctrine\Middleware\TransactionMiddleware;
 use NepadaTests\Environment;
@@ -72,8 +73,9 @@ class PreventOuterTransactionMiddlewareTest extends TestCase
     private function createEntityManager(): EntityManagerInterface
     {
         $tempDir = Environment::getTempDir();
-        $configuration = Setup::createAnnotationMetadataConfiguration([$tempDir], false, null, null, false);
-        return EntityManager::create(['driver' => 'pdo_sqlite', 'path' => "$tempDir/db.sqlite"], $configuration);
+        $configuration = ORMSetup::createAttributeMetadataConfiguration([$tempDir]);
+        $connection = DriverManager::getConnection(['driver' => 'pdo_sqlite', 'path' => "$tempDir/db.sqlite"]);
+        return new EntityManager($connection, $configuration);
     }
 
 }
