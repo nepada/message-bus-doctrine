@@ -33,7 +33,7 @@ final class DispatchRecordedEventsFromEntities implements EventSubscriber
 
     public function preFlush(PreFlushEventArgs $eventArgs): void
     {
-        $entityManager = $eventArgs->getEntityManager();
+        $entityManager = $eventArgs->getObjectManager();
         $unitOfWork = $entityManager->getUnitOfWork();
         foreach ($unitOfWork->getIdentityMap() as $entities) {
             foreach ($entities as $entity) {
@@ -47,7 +47,7 @@ final class DispatchRecordedEventsFromEntities implements EventSubscriber
 
     public function postFlush(PostFlushEventArgs $eventArgs): void
     {
-        $entityManager = $eventArgs->getEntityManager();
+        $entityManager = $eventArgs->getObjectManager();
         $unitOfWork = $entityManager->getUnitOfWork();
         foreach ($unitOfWork->getIdentityMap() as $entities) {
             foreach ($entities as $entity) {

@@ -34,7 +34,7 @@ class RecordingEntityManager extends EntityManagerDecorator
     public function flush(mixed $entity = null): void
     {
         $this->log[] = __METHOD__;
-        parent::flush($entity);
+        parent::flush();
     }
 
     public function close(): void
