@@ -15,6 +15,7 @@ updates:
     ignore:
       - dependency-name: "symfony/cache"
       - dependency-name: "doctrine/dbal"
+      - dependency-name: "composer-runtime-api"
     groups:
         phpstan:
             patterns: ["*phpstan*"]

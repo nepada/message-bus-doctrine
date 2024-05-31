@@ -7,6 +7,7 @@ includes:
     - vendor/spaze/phpstan-disallowed-calls/disallowed-loose-calls.neon
     - tests/PHPStan/disallowedCalls.neon
     - tests/PHPStan/shipmonk.neon
+    - tests/PHPStan/conditional.config.php
 
 parameters:
     level: max
@@ -21,17 +22,3 @@ parameters:
         uncheckedExceptionClasses:
             - LogicException
             - Nette\InvalidStateException
-
-    ignoreErrors:
-        - # false positive
-            path: src/MessageBusDoctrine/Middleware/TransactionMiddleware.php
-            message: "#^Dead catch - Throwable is never thrown in the try block\\.$#"
-            count: 1
-        - # false positive
-            path: src/MessageBusDoctrine/Middleware/ClearEntityManagerMiddleware.php
-            message: "#^Dead catch - Throwable is never thrown in the try block\\.$#"
-            count: 1
-        - # false positive
-            path: src/MessageBusDoctrine/Middleware/ClearEntityManagerMiddleware.php
-            message: "#^Property Nepada\\\\MessageBusDoctrine\\\\Middleware\\\\ClearEntityManagerMiddleware\\:\\:\\$clearOnError is never read, only written\\.$#"
-            count: 1
