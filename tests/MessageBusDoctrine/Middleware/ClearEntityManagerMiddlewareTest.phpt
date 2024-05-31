@@ -98,6 +98,9 @@ class ClearEntityManagerMiddlewareTest extends TestCase
         Assert::same($expectedLog, $entityManager->log);
     }
 
+    /**
+     * @param-immediately-invoked-callable $callback
+     */
     private function runInClearEntityManagerMiddleware(callable $callback, ClearEntityManagerMiddleware $middleware): void
     {
         $stack = new StackMiddleware([$middleware, new CallbackMiddleware($callback)]);

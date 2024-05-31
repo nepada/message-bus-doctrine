@@ -239,6 +239,9 @@ class TransactionMiddlewareTest extends TestCase
         );
     }
 
+    /**
+     * @param-immediately-invoked-callable $callback
+     */
     private function runInTransactionMiddleware(callable $callback, EntityManagerInterface $entityManager): void
     {
         $middleware = new TransactionMiddleware($entityManager);
