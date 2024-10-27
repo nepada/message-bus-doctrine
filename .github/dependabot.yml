@@ -14,6 +14,8 @@ updates:
       - dependency-type: "development"
     ignore:
       - dependency-name: "symfony/cache"
+      - dependency-name: "symfony/cache-contracts"
+      - dependency-name: "symfony/messenger"
       - dependency-name: "doctrine/dbal"
       - dependency-name: "composer-runtime-api"
     groups:
