@@ -119,7 +119,7 @@ class ClearEntityManagerMiddlewareTest extends TestCase
     }
 
     /**
-     * @return mixed[]
+     * @return list<mixed[]>
      */
     protected function getStates(): array
     {

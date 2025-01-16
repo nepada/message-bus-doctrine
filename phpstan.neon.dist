@@ -22,3 +22,15 @@ parameters:
         uncheckedExceptionClasses:
             - LogicException
             - Nette\InvalidStateException
+    ignoreErrors:
+        -
+            message: '#^Trait Nepada\\MessageBusDoctrine\\Events\\PrivateEventRecorder is used zero times and is not analysed\.$#'
+            identifier: trait.unused
+            count: 1
+            path: src/MessageBusDoctrine/Events/PrivateEventRecorder.php
+
+        -
+            message: '#^Trait Nepada\\MessageBusDoctrine\\Events\\PublicEventRecorder is used zero times and is not analysed\.$#'
+            identifier: trait.unused
+            count: 1
+            path: src/MessageBusDoctrine/Events/PublicEventRecorder.php

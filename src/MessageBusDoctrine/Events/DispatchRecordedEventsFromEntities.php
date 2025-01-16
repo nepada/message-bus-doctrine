@@ -21,7 +21,7 @@ final class DispatchRecordedEventsFromEntities implements EventSubscriber
     }
 
     /**
-     * @return string[]
+     * @return list<string>
      */
     public function getSubscribedEvents(): array
     {
