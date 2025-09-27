@@ -27,7 +27,7 @@ class ClearEntityManagerMiddlewareTest extends TestCase
 
     public function testEntityManagerIsNotClearedwhenInActiveTransaction(): void
     {
-        $entityManager = $this->createEntityManager();
+        $entityManager = @$this->createEntityManager();
         $entityManager->beginTransaction();
         $middleware = new ClearEntityManagerMiddleware($entityManager, true, true, true);
         $callback = function () use ($entityManager): void {
@@ -44,7 +44,7 @@ class ClearEntityManagerMiddlewareTest extends TestCase
      */
     public function testClearOnStart(bool $isEnabled): void
     {
-        $entityManager = $this->createEntityManager();
+        $entityManager = @$this->createEntityManager();
         $middleware = new ClearEntityManagerMiddleware($entityManager, $isEnabled, false, false);
         $callback = function () use ($entityManager): void {
             $entityManager->log[] = 'db operations';
@@ -61,7 +61,7 @@ class ClearEntityManagerMiddlewareTest extends TestCase
      */
     public function testClearOnError(bool $isEnabled): void
     {
-        $entityManager = $this->createEntityManager();
+        $entityManager = @$this->createEntityManager();
         $middleware = new ClearEntityManagerMiddleware($entityManager, false, false, $isEnabled);
 
         Assert::exception(
@@ -86,7 +86,7 @@ class ClearEntityManagerMiddlewareTest extends TestCase
      */
     public function testClearOnSuccess(bool $isEnabled): void
     {
-        $entityManager = $this->createEntityManager();
+        $entityManager = @$this->createEntityManager();
         $middleware = new ClearEntityManagerMiddleware($entityManager, false, $isEnabled, false);
         $callback = function () use ($entityManager): void {
             $entityManager->log[] = 'db operations';

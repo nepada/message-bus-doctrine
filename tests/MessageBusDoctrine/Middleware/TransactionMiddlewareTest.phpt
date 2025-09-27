@@ -28,7 +28,7 @@ class TransactionMiddlewareTest extends TestCase
 
     public function testChangesArePersistedWhenTransactionSucceeds(): void
     {
-        $entityManager = $this->createEntityManager();
+        $entityManager = @$this->createEntityManager();
         $callback = function () use ($entityManager): void {
             $entityManager->log[] = 'db operations';
         };
@@ -50,7 +50,7 @@ class TransactionMiddlewareTest extends TestCase
 
     public function testChangesArePersistedWhenTransactionSucceedsAndHasItsOwnNestedTransaction(): void
     {
-        $entityManager = $this->createEntityManager();
+        $entityManager = @$this->createEntityManager();
         $callback = function () use ($entityManager): void {
             $entityManager->beginTransaction();
             $entityManager->log[] = 'db operations';
@@ -78,7 +78,7 @@ class TransactionMiddlewareTest extends TestCase
 
     public function testEntityManagerIsClosedWhenTransactionFails(): void
     {
-        $entityManager = $this->createEntityManager();
+        $entityManager = @$this->createEntityManager();
 
         Assert::exception(
             function () use ($entityManager): void {
@@ -108,7 +108,7 @@ class TransactionMiddlewareTest extends TestCase
 
     public function testNothingIsDoneWhenMainTransactionIsRolledBackInsideAndExceptionIsThrown(): void
     {
-        $entityManager = $this->createEntityManager();
+        $entityManager = @$this->createEntityManager();
         Assert::exception(
             function () use ($entityManager): void {
                 $this->runInTransactionMiddleware(
@@ -135,7 +135,7 @@ class TransactionMiddlewareTest extends TestCase
 
     public function testNothingIsDoneWhenMainTransactionIsCommittedInsideAndExceptionIsThrown(): void
     {
-        $entityManager = $this->createEntityManager();
+        $entityManager = @$this->createEntityManager();
 
         Assert::exception(
             function () use ($entityManager): void {
@@ -163,7 +163,7 @@ class TransactionMiddlewareTest extends TestCase
 
     public function testTransactionNestingLevelMismatchExceptionIsRaisedMainTransactionIsRolledBackInside(): void
     {
-        $entityManager = $this->createEntityManager();
+        $entityManager = @$this->createEntityManager();
         $callback = function () use ($entityManager): void {
             $entityManager->rollback();
         };
@@ -189,7 +189,7 @@ class TransactionMiddlewareTest extends TestCase
 
     public function testTransactionNestingLevelMismatchExceptionIsRaisedWhenMainTransactionIsCommittedInside(): void
     {
-        $entityManager = $this->createEntityManager();
+        $entityManager = @$this->createEntityManager();
         $callback = function () use ($entityManager): void {
             $entityManager->commit();
         };
@@ -215,7 +215,7 @@ class TransactionMiddlewareTest extends TestCase
 
     public function testTransactionNestingLevelMismatchExceptionIsRaisedWhenNewTransactionIsStartedInside(): void
     {
-        $entityManager = $this->createEntityManager();
+        $entityManager = @$this->createEntityManager();
         $callback = function () use ($entityManager): void {
             $entityManager->beginTransaction();
         };

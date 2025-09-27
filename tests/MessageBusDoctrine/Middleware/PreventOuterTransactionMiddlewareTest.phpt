@@ -27,7 +27,7 @@ class PreventOuterTransactionMiddlewareTest extends TestCase
 
     public function testSucceedWithNoOuterTransaction(): void
     {
-        $entityManager = $this->createEntityManager();
+        $entityManager = @$this->createEntityManager();
         Assert::noError(
             function () use ($entityManager): void {
                 $this->runInMiddleware($entityManager);
@@ -37,7 +37,7 @@ class PreventOuterTransactionMiddlewareTest extends TestCase
 
     public function testSucceedWithNoOuterTransactionAndNestedHandling(): void
     {
-        $entityManager = $this->createEntityManager();
+        $entityManager = @$this->createEntityManager();
         $preventOuterTransactionMiddleware = new PreventOuterTransactionMiddleware($entityManager);
         $transactionMiddleware = new TransactionMiddleware($entityManager);
         $stack = new StackMiddleware([$preventOuterTransactionMiddleware, $transactionMiddleware, $preventOuterTransactionMiddleware, $transactionMiddleware]);
@@ -51,7 +51,7 @@ class PreventOuterTransactionMiddlewareTest extends TestCase
 
     public function testFailOnOuterTransaction(): void
     {
-        $entityManager = $this->createEntityManager();
+        $entityManager = @$this->createEntityManager();
         $entityManager->beginTransaction();
         Assert::exception(
             function () use ($entityManager): void {
