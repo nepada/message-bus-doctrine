@@ -255,6 +255,7 @@ class TransactionMiddlewareTest extends TestCase
         $tempDir = Environment::getTempDir();
         $configuration = ORMSetup::createAttributeMetadataConfiguration([$tempDir]);
         $connection = DriverManager::getConnection(['driver' => 'pdo_sqlite', 'path' => "$tempDir/db.sqlite"]);
+        @$connection->executeQuery('SELECT 1'); // force connection creation and suppress deprecation error of DBAL 2.x on PHP 8.5
         $entityManger = new EntityManager($connection, $configuration);
         $entityManger->getConnection()->setNestTransactionsWithSavepoints(true);
 
