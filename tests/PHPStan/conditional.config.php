@@ -23,5 +23,4 @@ if (InstalledVersions::satisfies(new VersionParser(), 'symfony/messenger', '<7.1
         'count' => 1,
     ];
 }
-
 return $config;

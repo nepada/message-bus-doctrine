@@ -15,6 +15,7 @@ use NepadaTests\TestCase;
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\Middleware\StackMiddleware;
 use Tester\Assert;
+use function method_exists;
 
 require_once __DIR__ . '/../../bootstrap.php';
 
@@ -74,6 +75,9 @@ class PreventOuterTransactionMiddlewareTest extends TestCase
     {
         $tempDir = Environment::getTempDir();
         $configuration = ORMSetup::createAttributeMetadataConfiguration([$tempDir]);
+        if (PHP_VERSION_ID >= 8_04_00 && method_exists($configuration, 'enableNativeLazyObjects')) {
+            $configuration->enableNativeLazyObjects(true);
+        }
         $connection = DriverManager::getConnection(['driver' => 'pdo_sqlite', 'path' => "$tempDir/db.sqlite"]);
         @$connection->executeQuery('SELECT 1'); // force connection creation and suppress deprecation error of DBAL 2.x on PHP 8.5
         return new EntityManager($connection, $configuration);
