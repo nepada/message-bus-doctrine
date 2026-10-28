@@ -13,11 +13,10 @@ use Nepada\MessageBus\Events\EventDispatcher;
 final class DispatchRecordedEventsFromEntities implements EventSubscriber
 {
 
-    private EventDispatcher $eventDispatcher;
-
-    public function __construct(EventDispatcher $eventDispatcher)
+    public function __construct(
+        private EventDispatcher $eventDispatcher,
+    )
     {
-        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**

@@ -11,23 +11,19 @@ use Symfony\Component\Messenger\Middleware\StackInterface;
 class ClearEntityManagerMiddleware implements MiddlewareInterface
 {
 
-    private EntityManagerInterface $entityManager;
-
-    private bool $clearOnStart;
-
-    private bool $clearOnError;
-
-    private bool $clearOnSuccess;
-
-    public function __construct(EntityManagerInterface $entityManager, bool $clearOnStart = true, bool $clearOnSuccess = true, bool $clearOnError = true)
+    public function __construct(
+        private EntityManagerInterface $entityManager,
+        private bool $clearOnStart = true,
+        private bool $clearOnSuccess = true,
+        private bool $clearOnError = true,
+    )
     {
-        $this->entityManager = $entityManager;
-        $this->clearOnStart = $clearOnStart;
-        $this->clearOnError = $clearOnError;
-        $this->clearOnSuccess = $clearOnSuccess;
     }
 
-    public function handle(Envelope $envelope, StackInterface $stack): Envelope
+    public function handle(
+        Envelope $envelope,
+        StackInterface $stack,
+    ): Envelope
     {
         if ($this->entityManager->getConnection()->isTransactionActive()) {
             return $stack->next()->handle($envelope, $stack);

@@ -11,16 +11,18 @@ use Symfony\Component\Messenger\Middleware\StackInterface;
 class PreventOuterTransactionMiddleware implements MiddlewareInterface
 {
 
-    private EntityManagerInterface $entityManager;
-
     private bool $isHandlingRootMessage = false;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(
+        private EntityManagerInterface $entityManager,
+    )
     {
-        $this->entityManager = $entityManager;
     }
 
-    public function handle(Envelope $envelope, StackInterface $stack): Envelope
+    public function handle(
+        Envelope $envelope,
+        StackInterface $stack,
+    ): Envelope
     {
         if ($this->isHandlingRootMessage) {
             return $stack->next()->handle($envelope, $stack);

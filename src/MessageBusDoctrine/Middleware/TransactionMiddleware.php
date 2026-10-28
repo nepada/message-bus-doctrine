@@ -11,14 +11,16 @@ use Symfony\Component\Messenger\Middleware\StackInterface;
 class TransactionMiddleware implements MiddlewareInterface
 {
 
-    private EntityManagerInterface $entityManager;
-
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(
+        private EntityManagerInterface $entityManager,
+    )
     {
-        $this->entityManager = $entityManager;
     }
 
-    public function handle(Envelope $envelope, StackInterface $stack): Envelope
+    public function handle(
+        Envelope $envelope,
+        StackInterface $stack,
+    ): Envelope
     {
         $this->entityManager->beginTransaction();
 
